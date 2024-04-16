@@ -22,7 +22,7 @@ const PatientRegistration = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('http://localhost:3005/departments');
+      const response = await axios.get('http://18.215.67.232:3005/departments');
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -43,7 +43,7 @@ const PatientRegistration = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3005/register', formData);
+      const response = await axios.post('http://18.215.67.232:3005/register', formData);
 
       toast.success('Patient registered successfully!');
 
