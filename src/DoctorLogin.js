@@ -55,7 +55,7 @@ const DoctorInterface = () => {
       console.error('Invalid patientId:', patientId);
       return;
     }
-
+//e
     try {
       await axios.put(`http://3.108.77.197:3005/patients/${encodeURIComponent(selectedDepartment)}/${patientId}/status`, { status: 'done' });
       setPatients((prevPatients) =>
