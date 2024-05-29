@@ -4,9 +4,9 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'database-1.clmee66q0sxg.us-east-1.rds.amazonaws.com',
+  host: 'hospital.cdi6ia4aw6r1.ap-south-1.rds.amazonaws.com',
   database: 'postgres',
-  password: 'hospital',
+  password: 'Hospital',
   port: '5432',
 });
 
@@ -14,7 +14,7 @@ console.log('Connected to PostgreSQL database successfully!');
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'http://13.200.151.52:3000' }));
 app.use(express.json());
 
 // Endpoint to register a patient

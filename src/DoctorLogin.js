@@ -14,7 +14,7 @@ const DoctorInterface = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('http://18.215.67.232:3005/departments');
+      const response = await axios.get('http://3.108.77.197:3005/departments');
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -24,7 +24,7 @@ const DoctorInterface = () => {
 
   const fetchPatients = async (selectedDepartmentName) => {
     try {
-      const response = await axios.get(`http://18.215.67.232:3005/patients/${encodeURIComponent(selectedDepartmentName)}`);
+      const response = await axios.get(`http://3.108.77.197:3005/patients/${encodeURIComponent(selectedDepartmentName)}`);
       setPatients(response.data);
       setCurrentPatientIndex(0);
     } catch (error) {
@@ -57,7 +57,7 @@ const DoctorInterface = () => {
     }
 
     try {
-      await axios.put(`http://18.215.67.232:3005/patients/${encodeURIComponent(selectedDepartment)}/${patientId}/status`, { status: 'done' });
+      await axios.put(`http://3.108.77.197:3005/patients/${encodeURIComponent(selectedDepartment)}/${patientId}/status`, { status: 'done' });
       setPatients((prevPatients) =>
         prevPatients.map((patient, index) =>
           index === currentPatientIndex ? { ...patient, status: 'done' } : patient
