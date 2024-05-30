@@ -41,7 +41,7 @@ app.post('/register', async (req, res) => {
 // Endpoint to fetch departments
 app.get('/departments', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT departmentid, name FROM departments');
+    const { rows } = await pool.query('SELECT department_id, name FROM departments');
     res.json(rows);
   } catch (error) {
     console.error('Error fetching departments:', error);
