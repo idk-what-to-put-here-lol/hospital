@@ -19,7 +19,7 @@ app.use(express.json());
 
 // Endpoint to register a patient
 app.post('/register', async (req, res) => {
-  const { name, dob, phoneNumber, email, gender, } = req.body;
+  const { name, dob, phoneNumber, email, gender, departmentId } = req.body;
 
   try {
     // Construct the name of the department-specific table based on departmentId
