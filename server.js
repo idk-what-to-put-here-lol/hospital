@@ -27,7 +27,7 @@ app.post('/register', async (req, res) => {
 
     // Insert data into the department-specific table
     await pool.query(
-      `INSERT INTO ${departmentTable} (name, dob, phonenumber, email, gender) VALUES ($1, $2, $3, $4, $5)`,
+      `INSERT INTO ${departmentTable} (name, dob, phone_number, email, gender) VALUES ($1, $2, $3, $4, $5)`,
       [name, dob, phoneNumber, email, gender]
     );
 
