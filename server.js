@@ -24,7 +24,7 @@ app.post('/register', async (req, res) => {
   try {
     // Construct the name of the department-specific table based on departmentId
     const departmentTable = `${departmentId.toLowerCase()}_patients`; // Convert departmentId to lowercase
-
+    console.log('my control came here'); //if it can form table name
     // Insert data into the department-specific table
     await pool.query(
       `INSERT INTO ${departmentTable} (name, dob, phone_number, email, gender) VALUES ($1, $2, $3, $4, $5)`,
