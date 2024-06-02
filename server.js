@@ -24,10 +24,11 @@ app.post('/register', async (req, res) => {
   try {
     // Construct the name of the department-specific table based on departmentId
     const departmentTable = `${departmentId.toLowerCase()}_patients`; // Convert departmentId to lowercase
-    console.log('my control came here'); //if it can form table name
+    console.log('my control came here'); // Check if it can form table name
+
     // Insert data into the department-specific table
     await pool.query(
-      `INSERT INTO ${departmentTable} (name, dob, phone_number, email, gender) VALUES ($1, $2, $3, $4, $5)`,
+      `INSERT INTO ${departmentTable} (name, dob, phone_number, email, gender, status) VALUES ($1, $2, $3, $4, $5, DEFAULT)`,
       [name, dob, phoneNumber, email, gender]
     );
 
@@ -51,15 +52,16 @@ app.get('/departments', async (req, res) => {
 
 // Endpoint to fetch patients by department name
 app.get('/patients/:departmentName', async (req, res) => {
-	console.log('my control came here');
+  console.log('my control came here');
   const departmentName = req.params.departmentName;
-console.log('department selected as' + req.params.departmentName);
+  console.log('department selected as' + req.params.departmentName);
+
   try {
     // Construct the name of the department-specific table based on departmentName
     const departmentTable = `${departmentName.toLowerCase()}_patients`; // Convert departmentName to lowercase
 
-    // Fetch patients from the department-specific table
-    const { rows } = await pool.query(`SELECT * FROM ${departmentTable}`);
+    // Fetch patients with status 'waiting' from the department-specific table
+    const { rows } = await pool.query(`SELECT * FROM ${departmentTable} WHERE status = 'waiting'`);
     res.json(rows);
   } catch (error) {
     console.error(`Error fetching patients for department ${departmentName}:`, error);
@@ -67,19 +69,18 @@ console.log('department selected as' + req.params.departmentName);
   }
 });
 
-// Endpoint to update patient status
+// Endpoint to update patient status and move to the next patient
 app.put('/patients/:departmentName/:patientId/status', async (req, res) => {
   const { departmentName, patientId } = req.params;
-  const { status } = req.body;
 
   try {
     // Construct the name of the department-specific table based on departmentName
     const departmentTable = `${departmentName.toLowerCase()}_patients`; // Convert departmentName to lowercase
 
-    // Update the status of the patient in the department-specific table
-    await pool.query(`UPDATE ${departmentTable} SET status = $1 WHERE patient_id = $2`, [status, patientId]);
+    // Update the status of the patient to 'done' in the department-specific table
+    await pool.query(`UPDATE ${departmentTable} SET status = 'done' WHERE patient_id = $1`, [patientId]);
 
-    res.json({ message: 'Patient status updated successfully' });
+    res.json({ message: 'Patient status updated to done successfully' });
   } catch (error) {
     console.error(`Error updating status for patient ${patientId} in department ${departmentName}:`, error);
     res.status(500).json({
